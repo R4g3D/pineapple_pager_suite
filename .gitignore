@@ -1,0 +1,22 @@
+# Operating-system metadata
+.DS_Store
+Thumbs.db
+
+# Editors and IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Generated deployment archives
+/pineapple-pager-suite*.tar.gz
+
+# Temporary files
+*.tmp
+*.bak
