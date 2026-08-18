@@ -45,6 +45,7 @@ and recon submodules so every payload retains the layout required by the Pager.
 - [Review the included payloads](#included-payloads)
 - [Clone the complete suite](#installation)
 - [Deploy it to a Pager](#deploy-to-the-pager)
+- [Choose how user categories are handled](#optional-replace-the-stock-user-categories)
 - [Understand the repository layout](#repository-layout)
 - [Update payload branches safely](#updating-the-suite)
 - [Verify a checkout](#verification)
@@ -118,9 +119,32 @@ git submodule update --init --recursive
 
 ## Deploy to the Pager
 
-The suite's `payloads/` directory mirrors `/root/payloads/` on the Pager. To
-avoid copying local Git metadata, create a deployment archive from its
-contents:
+The included installer packages all three payload roots, copies them over SSH,
+extracts them beneath `/root/payloads`, and verifies the number of payloads on
+the Pager. Run it from the suite checkout on your workstation:
+
+```sh
+./install.sh
+```
+
+The default Pager address is `172.16.52.1`. You can supply another address as a
+positional argument or use the explicit connection options:
+
+```sh
+./install.sh 172.16.52.1
+
+./install.sh \
+  --host 172.16.52.1 \
+  --port 22 \
+  --identity ~/.ssh/id_ed25519
+```
+
+Run `./install.sh --help` for all options. The script checks the checkout and
+SSH connection before transferring anything. It preserves file modes, excludes
+Git metadata, and does not delete existing payloads on the Pager.
+
+The suite's `payloads/` directory mirrors `/root/payloads/` on the Pager. For a
+manual installation, create and transfer the same deployment archive:
 
 ```sh
 tar --exclude='.git' \
@@ -160,12 +184,55 @@ Hak5 prefix so they remain distinguishable from custom handlers and actions.
 The archive is ignored by this repository and can be removed locally after
 deployment.
 
+### Optional: replace the stock user categories
+
+Pager firmware records its expected payload directories in
+`/etc/config/payloads`. The stock `user/...` entries can cause empty default
+category folders to be recreated after they are removed. A normal installer
+run deliberately leaves this configuration unchanged.
+
+To remove only the ten stock user-category entries and register the suite's
+top-level user categories instead, opt in explicitly:
+
+```sh
+./install.sh --replace-user-categories
+```
+
+This mode registers the following user categories:
+
+```text
+capture
+hak5-evil-portal
+hak5-exfiltration
+hak5-games
+hak5-general
+hak5-interception
+hak5-prank
+hak5-reconnaissance
+hak5-remote-access
+hak5-virtual-pager
+pager-apps
+```
+
+The installer does not remove or change the firmware's `alerts/...` and
+`recon/...` entries. Before changing UCI, it creates a timestamped backup such
+as `/etc/config/payloads.suite-backup.20260818-120000.1234`. It uses `rmdir` for
+the old stock folders, so a directory containing payload data is reported and
+preserved rather than deleted recursively.
+
+Nested custom category behavior can vary with Pager firmware. The suite
+therefore registers only the immediate directories below `user/`; alert event
+folders and recon target folders retain their firmware-defined paths. Firmware
+updates or factory resets may restore the stock UCI manifest, in which case run
+the installer with this option again.
+
 ## Repository layout
 
 ```text
 pineapple_pager_suite/
 ├── .gitmodules
 ├── .gitignore
+├── install.sh
 ├── LICENSE
 ├── README.md
 └── payloads/
@@ -279,6 +346,8 @@ should be under `suite-payload/`.
 Repository-side syntax and regression checks:
 
 ```sh
+bash -n install.sh
+
 bash -n payloads/user/capture/pineapol/payload.sh
 payloads/user/capture/pineapol/tests/test_parsers.sh
 
@@ -348,6 +417,30 @@ pinned payload revision in this repository.
 Public payload repositories normally clone without authentication. If a payload
 repository becomes private, configure a GitHub credential helper or authenticate
 with GitHub CLI before initializing the submodule.
+
+### The installer cannot connect over SSH
+
+Confirm that the Pager is booted, connected, and reachable at the selected
+address, then test the same account directly:
+
+```sh
+ssh root@172.16.52.1
+```
+
+The installer respects normal OpenSSH host-key checking and authentication. Use
+`--identity <key-file>` when the Pager requires a specific SSH key.
+
+### Restore the previous payload-directory configuration
+
+When `--replace-user-categories` is used, the installer prints the exact backup
+path it created. Restore that file on the Pager and commit the UCI package:
+
+```sh
+cp /etc/config/payloads.suite-backup.<timestamp> /etc/config/payloads
+uci commit payloads
+```
+
+Reboot if the Pager UI does not immediately reflect the restored categories.
 
 ## Credits
 
