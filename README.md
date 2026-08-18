@@ -2,10 +2,11 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![Platform: WiFi Pineapple Pager](https://img.shields.io/badge/Platform-WiFi%20Pineapple%20Pager-2ea44f)](https://hak5.org/)
-[![Payloads: 3](https://img.shields.io/badge/Payloads-3-orange)](#included-payloads)
+[![Payloads: 167](https://img.shields.io/badge/Payloads-167-orange)](#included-payloads)
 
-A curated WiFi Pineapple Pager payload suite containing pinEAPol, Loki, and
-PagerGotchi as independently maintained Git submodules.
+A reproducible WiFi Pineapple Pager payload suite containing pinEAPol, Loki,
+PagerGotchi, and 164 user payloads from the Hak5 community library. Payloads
+are pinned as independently maintained Git submodules at Pager-native paths.
 
 > [!WARNING]
 > These payloads are intended only for authorized security assessments and
@@ -15,8 +16,8 @@ PagerGotchi as independently maintained Git submodules.
 
 ## What is the Pineapple Pager Suite?
 
-The Pineapple Pager Suite provides three complementary Pager payloads in one
-reproducible repository:
+The Pineapple Pager Suite provides independently maintained and community
+developed Pager payloads in one reproducible repository:
 
 - **pinEAPol** performs controlled WPA-Enterprise EAP assessment and evidence
   capture with a verified hostapd-mana backend.
@@ -24,12 +25,17 @@ reproducible repository:
   credential testing, vulnerability scanning, and authorized data collection.
 - **PagerGotchi** automates wireless discovery and WPA handshake/PMKID capture
   with interactive targeting, privacy, and display controls.
+- **Hak5 user payloads** provide 164 community payloads across nine namespaced
+  categories, including general utilities, reconnaissance, games,
+  interception, exfiltration, remote access, Evil Portal tools, pranks, and
+  Virtual Pager tools.
 
-Each payload remains in its own source repository. This suite records a tested
-payload commit at the required Pager path while `.gitmodules` identifies the
-long-lived `suite-payload` branch used for explicit updates. A normal checkout
-therefore remains reproducible instead of silently changing when a payload
-branch advances.
+The suite records an explicit payload commit at every required Pager path while
+`.gitmodules` identifies the long-lived payload branch used for deliberate
+updates. A normal checkout therefore remains reproducible instead of silently
+changing when a branch advances. The three original payloads use one submodule
+each; the Hak5 fork uses one submodule per category so the Pager receives the
+supported `category/payload/payload.sh` layout without another nesting level.
 
 ## Documentation map
 
@@ -48,10 +54,22 @@ branch advances.
 | **pinEAPol** | `payloads/capture/pineapol` | Authorized WPA-Enterprise EAP assessment and evidence capture | [R4g3D/pineapple_pager_pineapol](https://github.com/R4g3D/pineapple_pager_pineapol) |
 | **Loki** | `payloads/pager-apps/loki` | Autonomous LAN reconnaissance, service testing, and Pager-native reporting | [R4g3D/pineapple_pager_loki](https://github.com/R4g3D/pineapple_pager_loki) |
 | **PagerGotchi** | `payloads/pager-apps/pagergotchi` | Wireless discovery and WPA handshake/PMKID capture companion | [R4g3D/pineapple_pager_pagergotchi](https://github.com/R4g3D/pineapple_pager_pagergotchi) |
+| **Hak5 Evil Portal** (10) | `payloads/hak5-evil-portal` | Evil Portal installation, configuration, and control | [R4g3D/pineapple_pager_hak5](https://github.com/R4g3D/pineapple_pager_hak5) |
+| **Hak5 Exfiltration** (6) | `payloads/hak5-exfiltration` | Authorized data transfer and capture workflows | [R4g3D/pineapple_pager_hak5](https://github.com/R4g3D/pineapple_pager_hak5) |
+| **Hak5 Games** (11) | `payloads/hak5-games` | Games and interactive demonstrations | [R4g3D/pineapple_pager_hak5](https://github.com/R4g3D/pineapple_pager_hak5) |
+| **Hak5 General** (81) | `payloads/hak5-general` | Pager utilities, configuration, diagnostics, and management | [R4g3D/pineapple_pager_hak5](https://github.com/R4g3D/pineapple_pager_hak5) |
+| **Hak5 Interception** (5) | `payloads/hak5-interception` | Authorized portal and traffic-interception workflows | [R4g3D/pineapple_pager_hak5](https://github.com/R4g3D/pineapple_pager_hak5) |
+| **Hak5 Prank** (4) | `payloads/hak5-prank` | Non-destructive demonstration payloads | [R4g3D/pineapple_pager_hak5](https://github.com/R4g3D/pineapple_pager_hak5) |
+| **Hak5 Reconnaissance** (32) | `payloads/hak5-reconnaissance` | Wireless, network, Bluetooth, and OSINT reconnaissance | [R4g3D/pineapple_pager_hak5](https://github.com/R4g3D/pineapple_pager_hak5) |
+| **Hak5 Remote Access** (13) | `payloads/hak5-remote-access` | Authorized remote connectivity and administration | [R4g3D/pineapple_pager_hak5](https://github.com/R4g3D/pineapple_pager_hak5) |
+| **Hak5 Virtual Pager** (2) | `payloads/hak5-virtual-pager` | Virtual Pager display customization | [R4g3D/pineapple_pager_hak5](https://github.com/R4g3D/pineapple_pager_hak5) |
 
 The payload repositories contain their own detailed requirements, controls,
 output locations, technical notes, and legal guidance. Read the relevant
-payload documentation before an engagement.
+payload documentation before an engagement. Hak5 library payloads are
+community-developed; inclusion records a reviewed source and deployable layout,
+but does not imply that every payload has been functionally tested on every
+firmware or hardware configuration.
 
 ## Requirements
 
@@ -59,7 +77,8 @@ payload documentation before an engagement.
 - Git with submodule support on the workstation used to clone the suite.
 - SSH access to the Pager for manual deployment.
 - Enough Pager storage for the complete suite, particularly Loki's bundled
-  binaries, Python packages, web assets, and themes.
+  binaries, Python packages, web assets, themes, and the Hak5 community
+  library.
 - Any network access required by an individual payload's documented first-run
   dependency checks.
 
@@ -114,6 +133,15 @@ After extraction, the installed payloads are located at:
 
 ```text
 /root/payloads/user/capture/pineapol
+/root/payloads/user/hak5-evil-portal/<payload>
+/root/payloads/user/hak5-exfiltration/<payload>
+/root/payloads/user/hak5-games/<payload>
+/root/payloads/user/hak5-general/<payload>
+/root/payloads/user/hak5-interception/<payload>
+/root/payloads/user/hak5-prank/<payload>
+/root/payloads/user/hak5-reconnaissance/<payload>
+/root/payloads/user/hak5-remote-access/<payload>
+/root/payloads/user/hak5-virtual-pager/<payload>
 /root/payloads/user/pager-apps/loki
 /root/payloads/user/pager-apps/pagergotchi
 ```
@@ -132,6 +160,15 @@ pineapple_pager_suite/
 └── payloads/
     ├── capture/
     │   └── pineapol/       # Git submodule: suite-payload
+    ├── hak5-evil-portal/    # Git submodule: suite-payload/evil-portal
+    ├── hak5-exfiltration/   # Git submodule: suite-payload/exfiltration
+    ├── hak5-games/          # Git submodule: suite-payload/games
+    ├── hak5-general/        # Git submodule: suite-payload/general
+    ├── hak5-interception/   # Git submodule: suite-payload/interception
+    ├── hak5-prank/          # Git submodule: suite-payload/prank
+    ├── hak5-reconnaissance/ # Git submodule: suite-payload/reconnaissance
+    ├── hak5-remote-access/  # Git submodule: suite-payload/remote-access
+    ├── hak5-virtual-pager/  # Git submodule: suite-payload/virtual-pager
     └── pager-apps/
         ├── loki/           # Git submodule: suite-payload
         └── pagergotchi/    # Git submodule: suite-payload
@@ -142,7 +179,7 @@ Their launch scripts use those paths to hand control between the two apps.
 
 ## Branch model
 
-Each payload repository has two suite branches:
+The pinEAPol, Loki, and PagerGotchi repositories each have two suite branches:
 
 - `suite-source` contains the full source repository layout plus the suite
   integration changes.
@@ -157,6 +194,26 @@ Changes should be made in the payload repository's `suite-source` branch and
 then propagated through a new subtree split. Do not make independent commits
 directly on `suite-payload`, because they will not be represented in the full
 source branch.
+
+The Hak5 fork keeps the same full-layout `suite-source` branch but generates a
+separate branch for each selected `library/user/<category>` subtree:
+
+```text
+suite-payload/evil-portal
+suite-payload/exfiltration
+suite-payload/games
+suite-payload/general
+suite-payload/interception
+suite-payload/prank
+suite-payload/reconnaissance
+suite-payload/remote-access
+suite-payload/virtual-pager
+```
+
+This lets several category submodules use the same HTTPS repository while each
+one remains rooted directly at its payload directories. Changes and upstream
+merges belong on the Hak5 fork's `suite-source`; category branches are generated
+artifacts and must not be edited directly.
 
 ## Updating the suite
 
@@ -173,10 +230,7 @@ advanced. Review and validate those changes before recording them:
 
 ```sh
 git diff --submodule=log
-git add \
-  payloads/capture/pineapol \
-  payloads/pager-apps/loki \
-  payloads/pager-apps/pagergotchi
+git add .gitmodules payloads
 git commit -m "Update suite payloads"
 ```
 
@@ -199,9 +253,10 @@ git submodule status
 git config -f .gitmodules --get-regexp '^submodule\..*\.(path|url|branch)$'
 ```
 
-A healthy checkout reports exactly three initialized submodules with no `-` or
-`+` prefix in `git submodule status`. The configured URLs should use HTTPS and
-every configured branch should be `suite-payload`.
+A healthy checkout reports exactly twelve initialized submodules with no `-`
+or `+` prefix in `git submodule status`. The configured URLs should use HTTPS.
+The original three branches should be `suite-payload`; Hak5 category branches
+should be under `suite-payload/`.
 
 Repository-side syntax and regression checks:
 
@@ -217,7 +272,24 @@ bash -n \
   payloads/pager-apps/pagergotchi/launch_loki.sh \
   payloads/pager-apps/pagergotchi/launch_pagergotchi.sh
 sh -n payloads/pager-apps/pagergotchi/pagerctl.sh
+
+find payloads/hak5-* \
+  -type f -name 'payload.sh' -exec bash -n {} +
+
+find payloads/hak5-* \
+  -type f -name 'payload.sh' ! -perm -111 -print
 ```
+
+The final command should print nothing.
+
+## Third-party licensing
+
+The repository-level GPL-3.0 license covers the suite's original coordination,
+documentation, and integration work. It does not relicense code contained in
+Git submodules. Each payload remains subject to the notices and terms supplied
+by its source repository and contributors. The Hak5 category submodules retain
+the upstream Hak5 repository's legal and attribution notices; review those
+notices and each payload's documentation before use or redistribution.
 
 ## Troubleshooting
 

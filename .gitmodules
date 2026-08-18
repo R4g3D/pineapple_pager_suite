@@ -10,3 +10,48 @@
 	path = payloads/pager-apps/pagergotchi
 	url = https://github.com/R4g3D/pineapple_pager_pagergotchi.git
 	branch = suite-payload
+[submodule "payloads/hak5-evil-portal"]
+	path = payloads/hak5-evil-portal
+	url = https://github.com/R4g3D/pineapple_pager_hak5.git
+	branch = suite-payload/evil-portal
+	shallow = true
+[submodule "payloads/hak5-exfiltration"]
+	path = payloads/hak5-exfiltration
+	url = https://github.com/R4g3D/pineapple_pager_hak5.git
+	branch = suite-payload/exfiltration
+	shallow = true
+[submodule "payloads/hak5-games"]
+	path = payloads/hak5-games
+	url = https://github.com/R4g3D/pineapple_pager_hak5.git
+	branch = suite-payload/games
+	shallow = true
+[submodule "payloads/hak5-general"]
+	path = payloads/hak5-general
+	url = https://github.com/R4g3D/pineapple_pager_hak5.git
+	branch = suite-payload/general
+	shallow = true
+[submodule "payloads/hak5-interception"]
+	path = payloads/hak5-interception
+	url = https://github.com/R4g3D/pineapple_pager_hak5.git
+	branch = suite-payload/interception
+	shallow = true
+[submodule "payloads/hak5-prank"]
+	path = payloads/hak5-prank
+	url = https://github.com/R4g3D/pineapple_pager_hak5.git
+	branch = suite-payload/prank
+	shallow = true
+[submodule "payloads/hak5-reconnaissance"]
+	path = payloads/hak5-reconnaissance
+	url = https://github.com/R4g3D/pineapple_pager_hak5.git
+	branch = suite-payload/reconnaissance
+	shallow = true
+[submodule "payloads/hak5-remote-access"]
+	path = payloads/hak5-remote-access
+	url = https://github.com/R4g3D/pineapple_pager_hak5.git
+	branch = suite-payload/remote-access
+	shallow = true
+[submodule "payloads/hak5-virtual-pager"]
+	path = payloads/hak5-virtual-pager
+	url = https://github.com/R4g3D/pineapple_pager_hak5.git
+	branch = suite-payload/virtual-pager
+	shallow = true
