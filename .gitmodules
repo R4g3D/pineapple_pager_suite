@@ -1,0 +1,12 @@
+[submodule "payloads/capture/pineapol"]
+	path = payloads/capture/pineapol
+	url = https://github.com/R4g3D/pineapple_pager_pineapol.git
+	branch = suite-payload
+[submodule "payloads/pager-apps/loki"]
+	path = payloads/pager-apps/loki
+	url = https://github.com/R4g3D/pineapple_pager_loki.git
+	branch = suite-payload
+[submodule "payloads/pager-apps/pagergotchi"]
+	path = payloads/pager-apps/pagergotchi
+	url = https://github.com/R4g3D/pineapple_pager_pagergotchi.git
+	branch = suite-payload

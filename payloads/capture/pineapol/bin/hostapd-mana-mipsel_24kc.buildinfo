@@ -1,6 +1,0 @@
-hostapd-mana branch: mana-2.12
-hostapd-mana commit: 785ced85088725913df1202b85a99ac3724caa4b
-hostapd-mana source: https://github.com/sensepost/hostapd-mana
-OpenWrt SDK: 24.10.1 ramips/mt76x8
-Architecture: mipsel_24kc
-mipsel-openwrt-linux-musl-gcc (OpenWrt GCC 13.3.0 r28597-0425664679) 13.3.0
